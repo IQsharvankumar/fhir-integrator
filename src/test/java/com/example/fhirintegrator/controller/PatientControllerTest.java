@@ -26,8 +26,13 @@ public class PatientControllerTest {
 
     @Test
     public void createPatientTest() throws Exception {
+        MethodOutcome outcome = new MethodOutcome();
+        Patient patient = new Patient();
+        patient.setId("test-id");
+        outcome.setResource(patient);
+        
         when(fhirClient.create().resource(any(Patient.class)).execute())
-            .thenReturn(new Patient().setId("test-id"));
+            .thenReturn(outcome);
 
         mockMvc.perform(post("/api/patients")
             .contentType(MediaType.APPLICATION_JSON)
