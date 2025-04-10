@@ -8,6 +8,7 @@ import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Identifier;
 import org.springframework.http.ResponseEntity;
+import ca.uhn.fhir.rest.api.MethodOutcome;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,7 +23,8 @@ public class PatientController {
         patient.addName(new HumanName().setFamily(patientDto.getLastName()).addGiven(patientDto.getFirstName()));
         patient.addIdentifier(new Identifier().setValue(patientDto.getMrn()).setSystem("urn:mrn"));
         
-        Patient created = fhirClient.create().resource(patient).execute();
+        MethodOutcome outcome = fhirClient.create().resource(patient).execute();
+        Patient created = (Patient) outcome.getResource();
         return ResponseEntity.ok(created.getIdElement().getIdPart());
     }
 
