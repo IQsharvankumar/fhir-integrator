@@ -1,0 +1,86 @@
+Title:
+"Create a Spring Boot application in Replit that integrates with an HL7 FHIR test server (HAPI FHIR) to perform CRUD operations on the Patient resource, including OAuth2 authentication."
+
+Instructions:
+
+Setup:
+
+Use Google Standard Code Guidelines
+
+Initialize a Spring Boot project with Java 11+ and these dependencies:
+
+Spring Web
+
+Spring Security (for OAuth2)
+
+Lombok
+
+HAPI FHIR Starter WebClient (for FHIR interactions)
+
+FHIR Server Configuration:
+
+Use the public HAPI FHIR test server: http://hapi.fhir.org/baseR4.
+
+Configure a FhirConfig class to create a FhirContext and IGenericClient bean.
+
+Patient CRUD Endpoints:
+
+Implement these REST endpoints:
+
+POST /api/patients: Create a Patient (accepts firstName, lastName, MRN).
+
+GET /api/patients/{id}: Fetch a Patient by ID.
+
+PUT /api/patients/{id}: Update a Patient.
+
+DELETE /api/patients/{id}: Delete a Patient.
+
+Use HAPI FHIR’s Patient resource model.
+
+OAuth2 Security:
+
+Secure endpoints with SMART on FHIR-style OAuth2 (use mocked tokens for testing).
+
+Add an Authorization: Bearer {token} header to FHIR client requests.
+
+Testing:
+
+Include a PatientControllerTest with mocked FHIR server responses.
+
+Add a Replit-friendly .replit file to auto-start the Spring Boot app.
+
+Example Code Snippets:
+
+java
+Copy
+// Sample Patient DTO  
+@Data  
+public class PatientDto {  
+  private String firstName;  
+  private String lastName;  
+  private String mrn;  
+}  
+
+// FHIR Client Bean  
+@Bean  
+public IGenericClient fhirClient() {  
+  return FhirContext.forR4().newRestfulGenericClient("http://hapi.fhir.org/baseR4");  
+}  
+Deployment:
+
+Ensure the app runs on Replit’s default port (8080) and prints FHIR server interactions to the console.
+
+Expected Output:
+
+A Replit project where users can:
+
+Send a POST request to create a Patient and receive a FHIR ID.
+
+Fetch/update/delete Patients via FHIR test server.
+
+
+Bonus:
+
+Add a README.md with sample cURL commands for testing.
+
+Include a screenshot of the FHIR server response in the Replit console.
